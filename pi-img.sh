@@ -17,7 +17,7 @@ check_readable() {
 }
 
 check_kpartx() {
-	if [ -x $(which kpartx) ]
+	if [ -x /sbin/kpartx ]
 	then
 		return
 	fi
@@ -27,7 +27,7 @@ check_kpartx() {
 }
 
 check_qemu() {
-	if [ -x $(which qemu-arm-static) ]
+	if [ -x /usr/bin/qemu-arm-static ]
 	then
 		return
 	fi
