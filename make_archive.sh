@@ -5,7 +5,7 @@ set -e
 # libedsacnetworking
 if [ ! -x /usr/bin/git ]
 then
-    yes | sudo apt install git gcc autoconf libglib2.0-dev libtool make pkg-config
+    sudo apt-get --yes install git gcc autoconf libglib2.0-dev libtool make pkg-config
 fi
 
 if [ ! -e libedsacnetworking ] 
@@ -28,7 +28,7 @@ cd ..
 # node-monitor
 if [ ! -x /usr/bin/gpio ]
 then
-	sudo apt install wiringpi libxml2 libxml2-dev
+	sudo apt-get --yes install wiringpi libxml2 libxml2-dev
 fi
 if [ ! -e node-monitor ]
 then
@@ -43,10 +43,10 @@ if [ ! -x node-monitor ]
 then
     for c in *.c
     do
-        echo gcc -c $CFLAGS $c
-	gcc -c $CFLAGS $c
+        echo gcc -O2 -c $CFLAGS $c
+		gcc -O2 -c $CFLAGS $c
     done
-    gcc -o node-monitor *.o $LFLAGS 
+    gcc -O2 -o node-monitor *.o $LFLAGS 
 fi
 cd ../../
 
@@ -60,6 +60,7 @@ then
 	cp $l dist-archive/
     done
     cp node-monitor/src/node-monitor dist-archive
+    cp libedsacnetworking/.libs/sending.test dist-archive
 
     tar -czf dist-archive.tar.gz dist-archive
 fi

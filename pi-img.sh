@@ -59,11 +59,18 @@ check_kpartx
 check_qemu
 check_binfmts
 
-# mount partition from pi image
+# mount root partition from pi image
 sudo kpartx -asp pi-ssh-enable $1
-export ROOT=$(find /dev/mapper -name "loop*pi-ssh-enable2")
 mkdir -p /tmp/pi-ssh-enable
+export ROOT=$(find /dev/mapper -name "loop*pi-ssh-enable2")
 sudo mount -o rw $ROOT /tmp/pi-ssh-enable
+
+# mount boot partition from pi image
+export BOOT=$(find /dev/mapper -name "loop*pi-ssh-enable1")
+sudo mount -o rw $BOOT /tmp/pi-ssh-enable/boot
+
+# enable spi
+echo "dtparam=spi=on" | sudo tee -a /tmp/pi-ssh-enable/boot/config.txt >> /dev/null
 
 # authorized_keys file
 export DIR=$(pwd)
@@ -89,6 +96,7 @@ sudo chroot /tmp/pi-ssh-enable chown -R pi:pi /home/pi/.ssh
 sudo rm /tmp/pi-ssh-enable/usr/bin/qemu-arm-static
 
 # unmount
+sudo umount /tmp/pi-ssh-enable/boot
 sudo umount /tmp/pi-ssh-enable
 sudo kpartx -d $1
 
