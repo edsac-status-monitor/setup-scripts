@@ -18,7 +18,7 @@ install_software() {
 		# make and install the mothership software
 		echo "Installing software"
 		sudo apt-get update
-		yes | sudo apt-get install git libtool gcc autoconf libglib2.0-dev make pkg-config libgtk-3-dev libsqlite3-dev
+		yes | sudo apt-get install git libtool gcc autoconf libglib2.0-dev make pkg-config libgtk-3-dev libsqlite3-dev xfce4-terminal
 	else
 		echo "It looks like the required software is already installed"
 	fi
